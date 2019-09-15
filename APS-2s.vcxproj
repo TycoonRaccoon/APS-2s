@@ -123,10 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Aps\FuncoesGame.h" />
+    <ClInclude Include="FuncoesGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Aps\Main.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
