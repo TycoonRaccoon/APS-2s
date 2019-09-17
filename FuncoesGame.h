@@ -227,7 +227,7 @@ void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorIn
 	}
 }
 
-void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool &validacao, bool seComecaEmCima){//FAZER DUAS VEZES 1 RATO 2 QUEIJO \\ esta com loop infinito
+void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool &validacao, bool seComecaEmCima){
 	ZerarMatrizArea();
 
 	matrizArea[posicaoInicialLinha][posicaoInicialColuna] = 1;
@@ -521,7 +521,7 @@ void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool &va
 	}
 }
 
-void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoColunaInicialRato, int posicaoLinhaInicialQueijo, int posicaoColunaInicialQueijo,bool &validacao){//FAZER DUAS VEZES 1 RATO 2 QUEIJO
+void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoColunaInicialRato, int posicaoLinhaInicialQueijo, int posicaoColunaInicialQueijo,bool &validacao){
 	int posicaoInicialDireita[2], posicaoInicialBaixo[2], posicaoInicialCima[2], matrizAuxiliar[tamanhoMatrizFase][tamanhoMatrizFase];
 	bool compararAreaComAuxiliar = true, compararAreaComRato = true, compararAuxiliarComRato = true, compararAreaComQueijo = true, compararAuxiliarComQueijo = true;
 
@@ -572,6 +572,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 	}
 	//	DADOS==tirardepois
+	cout << "mapas rato:\n";
 	for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase; j++) {
 			if (matrizAreaRato[i][j] == 1){
@@ -582,6 +583,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 		cout << endl;
 	}
+	cout << endl;
 	for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase; j++) {
 			if (matrizAuxiliar[i][j] == 1){
@@ -592,6 +594,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 		cout << endl;
 	}
+	cout << endl;
 	for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase; j++) {
 			if (matrizArea[i][j] == 1){
@@ -602,7 +605,8 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 		cout << endl;
 	}
-	cout << "comparacao dos mapas:\t" << compararAreaComRato << "\t" << compararAuxiliarComRato << "\t" << compararAreaComAuxiliar << endl;//tirar
+	cout << "\ncomparacao dos mapas:\t" << compararAreaComRato << "\t" << compararAuxiliarComRato << "\t" << compararAreaComAuxiliar << endl << "mapas Queijo:\n";
+	//tirar
 
 	if (!(compararAreaComRato == true && compararAuxiliarComRato == true && compararAreaComAuxiliar == true)){
 		if (compararAreaComRato == false){
@@ -679,6 +683,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 		cout << endl;
 	}
+	cout << endl;
 	for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase; j++) {
 			if (matrizAuxiliar[i][j] == 1){
@@ -689,6 +694,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 		cout << endl;
 	}
+	cout << endl;
 	for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase; j++) {
 			if (matrizArea[i][j] == 1){
@@ -699,7 +705,8 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 		}
 		cout << endl;
 	}
-	cout << "comparacao dos mapas:\t" << compararAreaComQueijo << "\t" << compararAuxiliarComQueijo << "\t" << compararAreaComAuxiliar << endl;//tirar
+	cout << "\ncomparacao dos mapas:\t" << compararAreaComQueijo << "\t" << compararAuxiliarComQueijo << "\t" << compararAreaComAuxiliar << endl;
+	//tirar----------------------
 
 	if (!(compararAreaComQueijo == true && compararAuxiliarComQueijo == true && compararAreaComAuxiliar == true)){
 		if (compararAreaComQueijo == false){
@@ -717,11 +724,6 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 			}
 		}
 	}
-	
-	
-	//TIRAR DEPOIS
-	//cout << posicaoInicialDireita[0] << posicaoInicialDireita[1] << "\t" << posicaoInicialBaixo[0] << posicaoInicialBaixo[1] << "\t" << posicaoInicialCima[0] << posicaoInicialCima[1] << endl;
-	//------------
 }
 
 bool validacaoDaFase() {
@@ -745,7 +747,6 @@ bool validacaoDaFase() {
 		}
 	}
 
-
  //PRINT MATRIZ OBJETOS!!!TIRAR DEPOIS
 	/*for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase; j++) {
@@ -753,8 +754,6 @@ bool validacaoDaFase() {
 		}
 		cout << endl;
 	}
-	
-	cout << valorPosicaoRato[0] << valorPosicaoRato[1] << endl;
  //-----------------------------------*/
 
 	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], validacao);
