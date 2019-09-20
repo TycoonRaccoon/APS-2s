@@ -123,7 +123,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FuncoesGame.h" />
+    <ClInclude Include="BibliotecasGame.h" />
+    <ClInclude Include="ConstrucaoFase.h" />
+    <ClInclude Include="ValidacaoFase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

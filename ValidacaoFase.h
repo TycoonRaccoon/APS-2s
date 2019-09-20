@@ -1,23 +1,10 @@
-#ifndef FUNCOESGAME_H
-#define FUNCOESGAME_H
+#ifndef VALIDACAOFASE_H 
+#define VALIDACAOFASE_H 
 
-#include<cstdlib>
-#include<ctime>
-#include<iostream>
-#include<Windows.h>
-#include<string>
-
-using namespace std;
+#include"ConstrucaoFase.h"
 
 
-const int tamanhoMatrizFase = 7, tamanhoVetorObjetos = (tamanhoMatrizFase - 2) * (tamanhoMatrizFase - 2);
-char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase];
-int vetorDosObjetos[tamanhoVetorObjetos];
-
-int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase];
-
-int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase];
-void transformarVetorObjetoEmMatriz(){
+void transformarVetorObjetoEmMatriz(int vetorDosObjetos[], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
 	for (int i = 0, k = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
 			if (i == 0 || i == tamanhoMatrizFase - 1 || j == 0 || j == tamanhoMatrizFase - 1){
@@ -31,173 +18,20 @@ void transformarVetorObjetoEmMatriz(){
 }
 
 
-
-
-	
-
-void exibeTabelaASCII(){
-	for (int i = 32; i < 255; i++){
-		cout << (char)i << "\t" << i << endl;
-	}
-}
-
-
-
-
-
-
-void zerarMatrizAreaRato(){
+void zerarMatrizDeArea(int MatrizASerZerada[tamanhoMatrizFase][tamanhoMatrizFase]){
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAreaRato[i][j] = 0;
-		}
-	}
-}
-
-void zerarMatrizAreaQueijo(){
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAreaQueijo[i][j] = 0;
-		}
-	}
-}
-
-void ZerarMatrizArea(){
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizArea[i][j] = 0;
-		}
-	}
-}
-
-void ZerarMatrizFase(){
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < 2 * tamanhoMatrizFase; j++){
-			matrizFase[i][j] = 'a';
+			MatrizASerZerada[i][j] = 0;
 		}
 	}
 }
 
 
-
-
-
-
-
-
-bool teste(int valor, int array[], int max){
-
-		for(int i = 0; i <= max; i++) if(valor == array[i]) return true;
-		return false;
-}
-
-void geraNumeroAleatorio(){
-	int i, x ;
-	i = x =0;
-
-	memset(vetorDosObjetos, 0, sizeof(int) * tamanhoVetorObjetos);
-	srand(time(NULL));
-	while(true){
-		if (i == tamanhoVetorObjetos) break;
-		x = (1 + (rand() % tamanhoVetorObjetos));
-		if(!teste(x, vetorDosObjetos, i)) vetorDosObjetos[i++] = x;
-	}
-}
-
-void criacaoFase() {
-	geraNumeroAleatorio();
-	ZerarMatrizFase();
-
-	for (int i = 0, k = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase * 2; j++){
-			if (i == 0 || i == tamanhoMatrizFase - 1){
-				matrizFase[i][j] = (char)219;
-			}
-			else if (j == 0 || j == 1 || j == tamanhoMatrizFase * 2 - 1 || j == tamanhoMatrizFase * 2 - 2){
-				matrizFase[i][j] = (char)219;
-			} else {
-				if (matrizFase[i][j] == (char)219 || matrizFase[i][j] == (char)32){
-				}
-				else if (matrizFase[i][j - 1] == (char)81 || matrizFase[i][j - 1] == (char)82){
-					matrizFase[i][j] = (char)32;
-				} else {
-					switch (vetorDosObjetos[k]){
-					case 1:
-						matrizFase[i][j] = (char)81;
-						k++;
-						break;
-					
-					case 2:
-						matrizFase[i][j] = (char)82;
-						k++;
-						break;
-					
-					case 20:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 21:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 22:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 23:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 24:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 25:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					default:
-						matrizFase[i][j] = (char)32;
-						matrizFase[i][j + 1] = (char)32;
-						k++;
-					}
-				}
-			}
-		}
-	}
-}
-
-void exibeFase() {
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase * 2; j++) {
-			cout << matrizFase[i][j];
-		}
-		cout << endl;
-	}
-}
-
-
-
-
-
-
-void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorInicioDireita[], int vetorInicioBaixo[], int vetorInicioCima[]){
+void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorInicioDireita[], int vetorInicioBaixo[], int vetorInicioCima[],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
 	int j = 1;
 	bool i = true;
 
-	while (i == true){
+	while (i){
 		if (matrizObjetos[posicaoLinhaRato][posicaoColunaRato + j] >= 20 && matrizObjetos[posicaoLinhaRato][posicaoColunaRato + j] <= 25){
 			vetorInicioDireita[0] = posicaoLinhaRato, vetorInicioDireita[1] = posicaoColunaRato + j - 1;
 			break;
@@ -207,7 +41,7 @@ void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorIn
 	}
 	j = 1;
 	i = true;
-	while (i == true){
+	while (i){
 		if (matrizObjetos[posicaoLinhaRato + j][posicaoColunaRato] >= 20 && matrizObjetos[posicaoLinhaRato + j][posicaoColunaRato] <= 25){
 			vetorInicioBaixo[0] = posicaoLinhaRato + j - 1, vetorInicioBaixo[1] = posicaoColunaRato;
 			break;
@@ -217,7 +51,7 @@ void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorIn
 	}
 	j = 1;
 	i = true;
-	while (i == true){
+	while (i){
 		if (matrizObjetos[posicaoLinhaRato - j][posicaoColunaRato] >= 20 && matrizObjetos[posicaoLinhaRato + j][posicaoColunaRato] <= 25){
 			vetorInicioCima[0] = posicaoLinhaRato - j + 1, vetorInicioCima[1] = posicaoColunaRato;
 			break;
@@ -227,8 +61,8 @@ void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorIn
 	}
 }
 
-void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool &validacao, bool seComecaEmCima){
-	ZerarMatrizArea();
+void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool seComecaEmCima, int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
+	zerarMatrizDeArea(matrizArea);
 
 	matrizArea[posicaoInicialLinha][posicaoInicialColuna] = 1;
 	int linha = posicaoInicialLinha, coluna = posicaoInicialColuna, contagem = 0;
@@ -259,7 +93,6 @@ void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool &va
 				if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
 					if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
 						if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-							validacao = false;
 						} else {
 							if (cima == true){
 								if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
@@ -521,23 +354,23 @@ void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool &va
 	}
 }
 
-void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoColunaInicialRato, int posicaoLinhaInicialQueijo, int posicaoColunaInicialQueijo,bool &validacao){
+void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoColunaInicialRato, int posicaoLinhaInicialQueijo, int posicaoColunaInicialQueijo, int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], int matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], int matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
 	int posicaoInicialDireita[2], posicaoInicialBaixo[2], posicaoInicialCima[2], matrizAuxiliar[tamanhoMatrizFase][tamanhoMatrizFase];
 	bool compararAreaComAuxiliar = true, compararAreaComRato = true, compararAuxiliarComRato = true, compararAreaComQueijo = true, compararAuxiliarComQueijo = true;
 
 
 
-	ateEncontrarParede(posicaoLinhaInicialRato, posicaoColunaInicialRato, posicaoInicialDireita, posicaoInicialBaixo, posicaoInicialCima);
+	ateEncontrarParede(posicaoLinhaInicialRato, posicaoColunaInicialRato, posicaoInicialDireita, posicaoInicialBaixo, posicaoInicialCima, matrizObjetos);
 
 
-	AreasAcessiveis(posicaoInicialDireita[0], posicaoInicialDireita[1], validacao, false);
-	zerarMatrizAreaRato();
+	AreasAcessiveis(posicaoInicialDireita[0], posicaoInicialDireita[1], false, matrizArea, matrizObjetos);
+	zerarMatrizDeArea(matrizAreaRato);
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
 			matrizAreaRato[i][j] = matrizArea[i][j];
 		}
 	}
-	AreasAcessiveis(posicaoInicialBaixo[0], posicaoInicialBaixo[1], validacao, false);
+	AreasAcessiveis(posicaoInicialBaixo[0], posicaoInicialBaixo[1], false, matrizArea, matrizObjetos);
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
 			matrizAuxiliar[i][j] = 0;
@@ -548,7 +381,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 			matrizAuxiliar[i][j] = matrizArea[i][j];
 		}
 	}
-	AreasAcessiveis(posicaoInicialCima[0], posicaoInicialCima[1], validacao, true);
+	AreasAcessiveis(posicaoInicialCima[0], posicaoInicialCima[1], true, matrizArea, matrizObjetos);
 
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
@@ -626,19 +459,20 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 	}
 
 	
+    compararAreaComAuxiliar = true;
 
 
-	ateEncontrarParede(posicaoLinhaInicialQueijo, posicaoColunaInicialQueijo, posicaoInicialDireita, posicaoInicialBaixo, posicaoInicialCima);
+	ateEncontrarParede(posicaoLinhaInicialQueijo, posicaoColunaInicialQueijo, posicaoInicialDireita, posicaoInicialBaixo, posicaoInicialCima, matrizObjetos);
 
 
-	AreasAcessiveis(posicaoInicialDireita[0], posicaoInicialDireita[1], validacao, false);
-	zerarMatrizAreaQueijo();
+	AreasAcessiveis(posicaoInicialDireita[0], posicaoInicialDireita[1], false, matrizArea, matrizObjetos);
+	zerarMatrizDeArea(matrizAreaQueijo);
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
 			matrizAreaQueijo[i][j] = matrizArea[i][j];
 		}
 	}
-	AreasAcessiveis(posicaoInicialBaixo[0], posicaoInicialBaixo[1], validacao, false);
+	AreasAcessiveis(posicaoInicialBaixo[0], posicaoInicialBaixo[1], false, matrizArea, matrizObjetos);
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
 			matrizAuxiliar[i][j] = 0;
@@ -649,7 +483,7 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 			matrizAuxiliar[i][j] = matrizArea[i][j];
 		}
 	}
-	AreasAcessiveis(posicaoInicialCima[0], posicaoInicialCima[1], validacao, true);
+	AreasAcessiveis(posicaoInicialCima[0], posicaoInicialCima[1], true, matrizArea, matrizObjetos);
 
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
@@ -726,11 +560,12 @@ void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoCol
 	}
 }
 
-bool validacaoDaFase() {
-	transformarVetorObjetoEmMatriz();
-	
-	bool validacao;
+bool validacaoDaFase(int vetorDosObjetos[]) {
+	int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase];
+	int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase];
 	int valorPosicaoRato[2], valorPosicaoQueijo[2];
+	
+	transformarVetorObjetoEmMatriz(vetorDosObjetos, matrizObjetos);
 	
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
@@ -756,7 +591,7 @@ bool validacaoDaFase() {
 	}
  //-----------------------------------*/
 
-	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], validacao);
+	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], matrizArea, matrizAreaRato, matrizAreaQueijo, matrizObjetos);
 	
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
@@ -771,11 +606,4 @@ bool validacaoDaFase() {
 
 
 
-
-
-
-
-
-
-
-#endif
+#endif  
