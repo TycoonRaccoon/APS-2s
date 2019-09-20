@@ -10,14 +10,11 @@
 using namespace std;
 
 const int tamanhoMatrizFase = 7, tamanhoVetorObjetos = (tamanhoMatrizFase - 2) * (tamanhoMatrizFase - 2);
-char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase];
-int vetorDosObjetos[tamanhoVetorObjetos];
-
-int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase];
 
 
 
-void ZerarMatrizFase(){
+
+void ZerarMatrizFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase]){
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < 2 * tamanhoMatrizFase; j++){
 			matrizFase[i][j] = 'a';
@@ -31,22 +28,23 @@ bool teste(int valor, int array[], int max){
 		return false;
 }
 
-void geraNumeroAleatorio(){
+void geraNumeroAleatorio(int array[]){
 	int i, x ;
-	i = x =0;
+	i = x = 0;
 
-	memset(vetorDosObjetos, 0, sizeof(int) * tamanhoVetorObjetos);
+	memset(array, 0, sizeof(int) * tamanhoVetorObjetos);
 	srand(time(NULL));
 	while(true){
 		if (i == tamanhoVetorObjetos) break;
 		x = (1 + (rand() % tamanhoVetorObjetos));
-		if(!teste(x, vetorDosObjetos, i)) vetorDosObjetos[i++] = x;
+		if(!teste(x, array, i)) array[i++] = x;
 	}
 }
 
-void criacaoFase() {
-	geraNumeroAleatorio();
-	ZerarMatrizFase();
+void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase],int vetorDosObjetos[]) {
+
+	geraNumeroAleatorio(vetorDosObjetos);
+	ZerarMatrizFase(matrizFase);
 
 	for (int i = 0, k = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase * 2; j++){
@@ -119,7 +117,7 @@ void criacaoFase() {
 	}
 }
 
-void exibeFase() {
+void exibeFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase]) {
 	for (int i = 0; i < tamanhoMatrizFase; i++) {
 		for (int j = 0; j < tamanhoMatrizFase * 2; j++) {
 			cout << matrizFase[i][j];
