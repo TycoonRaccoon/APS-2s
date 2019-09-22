@@ -27,535 +27,142 @@ void zerarMatrizDeArea(int MatrizASerZerada[tamanhoMatrizFase][tamanhoMatrizFase
 }
 
 
-void ateEncontrarParede(int posicaoLinhaRato, int posicaoColunaRato, int vetorInicioDireita[], int vetorInicioBaixo[], int vetorInicioCima[],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
-	int j = 1;
-	bool i = true;
+void marcaERetornaPosicoes(int linha, int coluna, int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase],int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], int posicoes[], int &indexArray){
+	
+	bool paredeDireita = (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25),
+	paredeCima = (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25),
+	paredeEsquerda = (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25),
+	paredeBaixo = (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25),
+	marcadoDireita = matrizArea[linha][coluna + 1] == 1,
+	marcadoCima = matrizArea[linha - 1][coluna] == 1,
+	marcadoEsquerda = matrizArea[linha][coluna - 1] == 1,
+	marcadoBaixo = matrizArea[linha + 1][coluna] == 1;
+	
+	if (!paredeDireita && !marcadoDireita){
+		if (!paredeCima && !marcadoCima){
+			if (!paredeEsquerda && !marcadoEsquerda){
+				if (!paredeBaixo && !marcadoBaixo){
+					matrizArea[linha][coluna + 1] = 1,matrizArea[linha - 1][coluna] = 1,matrizArea[linha][coluna - 1] = 1,matrizArea[linha + 1][coluna] = 1;
+					posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+					posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++,
+					posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++,
+					posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+				} else {
+					matrizArea[linha][coluna + 1] = 1,matrizArea[linha - 1][coluna] = 1,matrizArea[linha][coluna - 1] = 1;
+					posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+					posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++,
+					posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++;
+				}
+				
+			} else {
+				if (!paredeBaixo && !marcadoBaixo){
+					matrizArea[linha][coluna + 1] = 1,matrizArea[linha - 1][coluna] = 1,matrizArea[linha + 1][coluna] = 1;
+					posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+					posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++,
+					posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+				} else {
+					matrizArea[linha][coluna + 1] = 1,matrizArea[linha - 1][coluna] = 1;
+					posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+					posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+				}
+			}
+			
+		} else {
+			if (!paredeEsquerda && !marcadoEsquerda){
+				if (!paredeBaixo && !marcadoBaixo){
+					matrizArea[linha][coluna + 1] = 1,matrizArea[linha][coluna - 1] = 1,matrizArea[linha + 1][coluna] = 1;
+					posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+					posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++,
+					posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+				} else {
+					matrizArea[linha][coluna + 1] = 1,matrizArea[linha][coluna - 1] = 1;
+					posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+					posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++;
+				}
+			} else if (!paredeBaixo && !marcadoBaixo){
+				matrizArea[linha][coluna + 1] = 1,matrizArea[linha + 1][coluna] = 1;
+				posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++,
+				posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+			} else {
+				matrizArea[linha][coluna + 1] = 1;
+				posicoes[indexArray] = linha, indexArray++, posicoes[indexArray] = coluna + 1, indexArray++;
+			}
+		}
 
-	while (i){
-		if (matrizObjetos[posicaoLinhaRato][posicaoColunaRato + j] >= 20 && matrizObjetos[posicaoLinhaRato][posicaoColunaRato + j] <= 25){
-			vetorInicioDireita[0] = posicaoLinhaRato, vetorInicioDireita[1] = posicaoColunaRato + j - 1;
-			break;
-		} else {
-			j++;
+	} else {
+		if (!paredeCima && !marcadoCima){
+			if (!paredeEsquerda && !marcadoEsquerda){
+				if (!paredeBaixo && !marcadoBaixo){
+					matrizArea[linha - 1][coluna] = 1,matrizArea[linha][coluna - 1] = 1,matrizArea[linha + 1][coluna] = 1;
+					posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++,
+					posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++,
+					posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+				} else {
+					matrizArea[linha - 1][coluna] = 1,matrizArea[linha][coluna - 1] = 1;
+					posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++,
+					posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++;
+				}
+			} else if (!paredeBaixo && !marcadoBaixo){
+				matrizArea[linha - 1][coluna] = 1,matrizArea[linha + 1][coluna] = 1;
+				posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++,
+				posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+			} else {
+				matrizArea[linha - 1][coluna] = 1;
+				posicoes[indexArray] = linha - 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+			}
+		} else if (!paredeEsquerda && !marcadoEsquerda){
+			if (!paredeBaixo && !marcadoBaixo){
+				matrizArea[linha][coluna - 1] = 1,matrizArea[linha + 1][coluna] = 1;
+				posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++,
+				posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
+			} else {
+				matrizArea[linha][coluna - 1] = 1;
+				posicoes[indexArray] = linha, indexArray++,posicoes[indexArray] = coluna - 1, indexArray++;
+			}
+		} else if (!paredeBaixo && !marcadoBaixo){
+			matrizArea[linha + 1][coluna] = 1;
+			posicoes[indexArray] = linha + 1, indexArray++, posicoes[indexArray] = coluna, indexArray++;
 		}
 	}
-	j = 1;
-	i = true;
-	while (i){
-		if (matrizObjetos[posicaoLinhaRato + j][posicaoColunaRato] >= 20 && matrizObjetos[posicaoLinhaRato + j][posicaoColunaRato] <= 25){
-			vetorInicioBaixo[0] = posicaoLinhaRato + j - 1, vetorInicioBaixo[1] = posicaoColunaRato;
-			break;
-		} else {
-			j++;
-		}
-	}
-	j = 1;
-	i = true;
-	while (i){
-		if (matrizObjetos[posicaoLinhaRato - j][posicaoColunaRato] >= 20 && matrizObjetos[posicaoLinhaRato + j][posicaoColunaRato] <= 25){
-			vetorInicioCima[0] = posicaoLinhaRato - j + 1, vetorInicioCima[1] = posicaoColunaRato;
-			break;
-		} else {
-			j++;
-		}
-	}
+	
 }
 
-void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, bool seComecaEmCima, int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
+void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
 	zerarMatrizDeArea(matrizArea);
 
 	matrizArea[posicaoInicialLinha][posicaoInicialColuna] = 1;
-	int linha = posicaoInicialLinha, coluna = posicaoInicialColuna, contagem = 0;
-	bool qubrarWhile = false, direita = false, cima = false, esquerda = seComecaEmCima, baixo = false;
-	bool seNadaEmVolta = (!(matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25)) && (!(matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25)) && (!(matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25)) && (!(matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25));
+	int linha = posicaoInicialLinha, coluna = posicaoInicialColuna, index = 0, posicoesMarcadas[2 * tamanhoVetorObjetos/* - 2 * numero de paredes - 2(por depois)*/];
 
-	while (qubrarWhile == false){
-		
-		if (seNadaEmVolta){
-			if (direita == true){
-				matrizArea[linha + 1][coluna] = 1;
-				linha += 1, baixo = true, direita = cima = esquerda = false;
-			}
-			else if (cima == true){
-				matrizArea[linha][coluna + 1] = 1;
-				coluna += 1, direita = true, baixo = cima = esquerda = false;
-			} 
-			else if (esquerda == true){
-				matrizArea[linha - 1][coluna] = 1;
-				linha -= 1, cima = true, direita = baixo = esquerda = false;
-			}
-			else if (baixo == true){
-				matrizArea[linha][coluna - 1] = 1;
-				coluna -= 1, esquerda = true, direita = cima = baixo = false;
-			}
-		} else {
-			if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-				if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-					if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-						if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-						} else {
-							if (cima == true){
-								if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-									if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-										if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-											matrizArea[linha + 1][coluna] = 1;
-											linha += 1, baixo = true, direita = cima = esquerda = false;
-										} else {
-											matrizArea[linha][coluna - 1] = 1;
-											coluna -= 1, esquerda = true, direita = cima = baixo = false;
-										}
-									} else {
-										matrizArea[linha - 1][coluna] = 1;
-										linha -= 1, cima = true, direita = esquerda = baixo = false;
-									}
-								} else {
-									matrizArea[linha][coluna + 1] = 1;
-									coluna += 1, direita = true, cima = baixo = esquerda = false;
-								}
-							}
-							else if (esquerda == true){
-								if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-									if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-										if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-											matrizArea[linha][coluna + 1] = 1;
-											coluna += 1, direita = true, baixo = cima = esquerda = false;
-										} else {
-											matrizArea[linha + 1][coluna] = 1;
-											linha += 1, baixo = true, direita = cima = esquerda = false;
-										}
-									} else {
-										matrizArea[linha][coluna - 1] = 1;
-										coluna -= 1, esquerda = true, direita = cima = baixo = false;
-									}
-								} else {
-									matrizArea[linha - 1][coluna] = 1;
-									linha -= 1, cima = true, direita = baixo = esquerda = false;
-								}
-							}
-							else if (baixo == true){
-								if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-									if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-										if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-											matrizArea[linha - 1][coluna] = 1;
-											linha -= 1, cima = true, direita = baixo = esquerda = false;
-										} else {
-											matrizArea[linha][coluna + 1] = 1;
-											coluna += 1, direita = true, cima = baixo = esquerda = false;
-										}
-									} else {
-										matrizArea[linha + 1][coluna] = 1;
-										linha += 1, baixo = true, direita = esquerda = cima = false;
-									}
-								} else {
-									matrizArea[linha][coluna - 1] = 1;
-									coluna -= 1, esquerda = true, direita = cima = baixo = false;
-								}
-							}
-							 else {
-								matrizArea[linha + 1][coluna] = 1;
-								linha += 1, baixo = true, direita = cima = esquerda = false;
-							}
-						}
-					} else {
-						if (direita == true){
-							if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-								if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-									if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-										matrizArea[linha][coluna - 1] = 1;
-										coluna -= 1, esquerda = true, direita = cima = baixo = false;
-									} else {
-										matrizArea[linha - 1][coluna] = 1;
-										linha -= 1, cima = true, direita = baixo = esquerda = false;
-									}
-								} else {
-									matrizArea[linha][coluna + 1] = 1;
-									coluna += 1, direita = true, esquerda = cima = baixo = false;
-								}
-							} else {
-								matrizArea[linha + 1][coluna] = 1;
-								linha += 1, baixo = true, direita = cima = esquerda = false;
-							}
-						}
-						else if (cima == true){
-							if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-								if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-									if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-										matrizArea[linha + 1][coluna] = 1;
-										linha += 1, baixo = true, direita = cima = esquerda = false;
-									} else {
-										matrizArea[linha][coluna - 1] = 1;
-										coluna -= 1, esquerda = true, direita = cima = baixo = false;
-									}
-								} else {
-									matrizArea[linha - 1][coluna] = 1;
-									linha -= 1, cima = true, direita = esquerda = baixo = false;
-								}
-							} else {
-								matrizArea[linha][coluna + 1] = 1;
-								coluna += 1, direita = true, cima = baixo = esquerda = false;
-							}
-						}
-						else if (esquerda == true){
-							if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-								if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-									if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-										matrizArea[linha][coluna + 1] = 1;
-										coluna += 1, direita = true, baixo = cima = esquerda = false;
-									} else {
-										matrizArea[linha + 1][coluna] = 1;
-										linha += 1, baixo = true, direita = cima = esquerda = false;
-									}
-								} else {
-									matrizArea[linha][coluna - 1] = 1;
-									coluna -= 1, esquerda = true, direita = cima = baixo = false;
-								}
-							} else {
-								matrizArea[linha - 1][coluna] = 1;
-								linha -= 1, cima = true, direita = baixo = esquerda = false;
-							}
-						} else {
-								matrizArea[linha][coluna - 1] = 1;
-								coluna -= 1, esquerda = true, direita = cima = baixo = false;
-						}
-					}
-				} else {
-					if (baixo == true){
-						if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-							if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-								if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-									matrizArea[linha - 1][coluna] = 1;
-									linha -= 1, cima = true, direita = baixo = esquerda = false;
-								} else {
-									matrizArea[linha][coluna + 1] = 1;
-									coluna += 1, direita = true, cima = baixo = esquerda = false;
-								}
-							} else {
-								matrizArea[linha + 1][coluna] = 1;
-								linha += 1, baixo = true, direita = esquerda = cima = false;
-							}
-						} else {
-							matrizArea[linha][coluna - 1] = 1;
-							coluna -= 1, esquerda = true, direita = cima = baixo = false;
-						}
-					}
-					else if (direita == true){
-						if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-							if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-								if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-									matrizArea[linha][coluna - 1] = 1;
-									coluna -= 1, esquerda = true, direita = cima = baixo = false;
-								} else {
-									matrizArea[linha - 1][coluna] = 1;
-									linha -= 1, cima = true, direita = baixo = esquerda = false;
-								}
-							} else {
-								matrizArea[linha][coluna + 1] = 1;
-								coluna += 1, direita = true, esquerda = cima = baixo = false;
-							}
-						} else {
-							matrizArea[linha + 1][coluna] = 1;
-							linha += 1, baixo = true, direita = cima = esquerda = false;
-						}
-					}
-					else if (cima == true){
-						if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-							if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-								if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-									matrizArea[linha + 1][coluna] = 1;
-									linha += 1, baixo = true, direita = cima = esquerda = false;
-								} else {
-									matrizArea[linha][coluna - 1] = 1;
-									coluna -= 1, esquerda = true, direita = cima = baixo = false;
-								}
-							} else {
-								matrizArea[linha - 1][coluna] = 1;
-								linha -= 1, cima = true, direita = esquerda = baixo = false;
-							}
-						} else {
-							matrizArea[linha][coluna + 1] = 1;
-							coluna += 1, direita = true, cima = baixo = esquerda = false;
-						}
-					} else {
-						matrizArea[linha - 1][coluna] = 1;
-						linha -= 1, cima = true, direita = baixo = esquerda = false;
-					}
-				}
-			} else {
-				if (esquerda == true){
-					if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-						if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-							if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-								matrizArea[linha][coluna + 1] = 1;
-								coluna += 1, direita = true, baixo = cima = esquerda = false;
-							} else {
-								matrizArea[linha + 1][coluna] = 1;
-								linha += 1, baixo = true, direita = cima = esquerda = false;
-							}
-						} else {
-							matrizArea[linha][coluna - 1] = 1;
-							coluna -= 1, esquerda = true, direita = cima = baixo = false;
-						}
-					} else {
-						matrizArea[linha - 1][coluna] = 1;
-						linha -= 1, cima = true, direita = baixo = esquerda = false;
-					}
-				}
-				else if (baixo == true){
-					if (matrizObjetos[linha][coluna - 1] >= 20 && matrizObjetos[linha][coluna - 1] <= 25){
-						if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-							if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-								matrizArea[linha - 1][coluna] = 1;
-								linha -= 1, cima = true, direita = baixo = esquerda = false;
-							} else {
-								matrizArea[linha][coluna + 1] = 1;
-								coluna += 1, direita = true, cima = baixo = esquerda = false;
-							}
-						} else {
-							matrizArea[linha + 1][coluna] = 1;
-							linha += 1, baixo = true, direita = esquerda = cima = false;
-						}
-					} else {
-						matrizArea[linha][coluna - 1] = 1;
-						coluna -= 1, esquerda = true, direita = cima = baixo = false;
-					}
-				}
-				else if (direita == true){
-					if (matrizObjetos[linha + 1][coluna] >= 20 && matrizObjetos[linha + 1][coluna] <= 25){
-						if (matrizObjetos[linha][coluna + 1] >= 20 && matrizObjetos[linha][coluna + 1] <= 25){
-							if (matrizObjetos[linha - 1][coluna] >= 20 && matrizObjetos[linha - 1][coluna] <= 25){
-								matrizArea[linha][coluna - 1] = 1;
-								coluna -= 1, esquerda = true, direita = cima = baixo = false;
-							} else {
-								matrizArea[linha - 1][coluna] = 1;
-								linha -= 1, cima = true, direita = baixo = esquerda = false;
-							}
-						} else {
-							matrizArea[linha][coluna + 1] = 1;
-							coluna += 1, direita = true, esquerda = cima = baixo = false;
-						}
-					} else {
-						matrizArea[linha + 1][coluna] = 1;
-						linha += 1, baixo = true, direita = cima = esquerda = false;
-					}
-				} else {
-					matrizArea[linha][coluna + 1] = 1;
-					coluna += 1, direita = true, baixo = cima = esquerda = false;
-				}
-			}
-		}
-
-		if (posicaoInicialLinha == linha && posicaoInicialColuna == coluna){
-			if (contagem != 3){
-				contagem++;
-			} else {
-			qubrarWhile = true;
-			}
+	for (int i = 0; i < 2 * tamanhoVetorObjetos/* - 2 * numero de paredes - 2(por depois)*/; i++){
+		posicoesMarcadas[i] = -1;
+	}
+	
+	marcaERetornaPosicoes(linha, coluna, matrizObjetos, matrizArea, posicoesMarcadas, index);
+	int i = 0;
+	while (posicoesMarcadas[i] != -1){
+		marcaERetornaPosicoes(posicoesMarcadas[i], posicoesMarcadas[i + 1], matrizObjetos, matrizArea, posicoesMarcadas, index);
+		i += 2;
+	}
+	
+	//print
+	for (int i = 0, j = 0; i < 2 * tamanhoVetorObjetos/* - 2 * numero de paredes - 2(por depois)*/; i++, j++){
+		cout << posicoesMarcadas[i];
+		if (j % 2 == 1){
+			cout << "\t";
 		}
 	}
+	cout << endl;
 }
 
-void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicialRato, int posicaoColunaInicialRato, int posicaoLinhaInicialQueijo, int posicaoColunaInicialQueijo, int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], int matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], int matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase]){
-	int posicaoInicialDireita[2], posicaoInicialBaixo[2], posicaoInicialCima[2], matrizAuxiliar[tamanhoMatrizFase][tamanhoMatrizFase];
-	bool compararAreaComAuxiliar = true, compararAreaComRato = true, compararAuxiliarComRato = true, compararAreaComQueijo = true, compararAuxiliarComQueijo = true;
+void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicial, int posicaoColunaInicial, int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], int matriz[tamanhoMatrizFase][tamanhoMatrizFase]){
 
-
-
-	ateEncontrarParede(posicaoLinhaInicialRato, posicaoColunaInicialRato, posicaoInicialDireita, posicaoInicialBaixo, posicaoInicialCima, matrizObjetos);
-
-
-	AreasAcessiveis(posicaoInicialDireita[0], posicaoInicialDireita[1], false, matrizArea, matrizObjetos);
-	zerarMatrizDeArea(matrizAreaRato);
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAreaRato[i][j] = matrizArea[i][j];
-		}
-	}
-	AreasAcessiveis(posicaoInicialBaixo[0], posicaoInicialBaixo[1], false, matrizArea, matrizObjetos);
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAuxiliar[i][j] = 0;
-		}
-	}
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAuxiliar[i][j] = matrizArea[i][j];
-		}
-	}
-	AreasAcessiveis(posicaoInicialCima[0], posicaoInicialCima[1], true, matrizArea, matrizObjetos);
-
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			if (matrizArea[i][j] != matrizAreaRato[i][j]){
-				compararAreaComRato = false;
-			}
-		}
-	}
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			if (matrizAuxiliar[i][j] != matrizAreaRato[i][j]){
-				compararAuxiliarComRato = false;
-			}
-		}
-	}
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			if (matrizArea[i][j] != matrizAuxiliar[i][j]){
-				compararAreaComAuxiliar = false;
-			}
-		}
-	}
-	//	DADOS==tirardepois
-	cout << "mapas rato:\n";
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase; j++) {
-			if (matrizAreaRato[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizAreaRato[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase; j++) {
-			if (matrizAuxiliar[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizAuxiliar[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase; j++) {
-			if (matrizArea[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizArea[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << "\ncomparacao dos mapas:\t" << compararAreaComRato << "\t" << compararAuxiliarComRato << "\t" << compararAreaComAuxiliar << endl << "mapas Queijo:\n";
-	//tirar
-
-	if (!(compararAreaComRato == true && compararAuxiliarComRato == true && compararAreaComAuxiliar == true)){
-		if (compararAreaComRato == false){
-			for (int i = 0; i < tamanhoMatrizFase; i++){
-				for (int j = 0; j < tamanhoMatrizFase; j++){
-					matrizAreaRato[i][j] = matrizAuxiliar[i][j];
-				}
-			}
-		}
-		else if (compararAuxiliarComRato == false){
-			for (int i = 0; i < tamanhoMatrizFase; i++){
-				for (int j = 0; j < tamanhoMatrizFase; j++){
-					matrizAreaRato[i][j] = matrizArea[i][j];
-				}
-			}
-		}
-	}
-
+	zerarMatrizDeArea(matriz);
 	
-    compararAreaComAuxiliar = true;
-
-
-	ateEncontrarParede(posicaoLinhaInicialQueijo, posicaoColunaInicialQueijo, posicaoInicialDireita, posicaoInicialBaixo, posicaoInicialCima, matrizObjetos);
-
-
-	AreasAcessiveis(posicaoInicialDireita[0], posicaoInicialDireita[1], false, matrizArea, matrizObjetos);
-	zerarMatrizDeArea(matrizAreaQueijo);
+	AreasAcessiveis(posicaoLinhaInicial,posicaoColunaInicial, matrizArea, matrizObjetos);
+	
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAreaQueijo[i][j] = matrizArea[i][j];
-		}
-	}
-	AreasAcessiveis(posicaoInicialBaixo[0], posicaoInicialBaixo[1], false, matrizArea, matrizObjetos);
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAuxiliar[i][j] = 0;
-		}
-	}
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			matrizAuxiliar[i][j] = matrizArea[i][j];
-		}
-	}
-	AreasAcessiveis(posicaoInicialCima[0], posicaoInicialCima[1], true, matrizArea, matrizObjetos);
-
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			if (matrizArea[i][j] != matrizAreaQueijo[i][j]){
-				compararAreaComQueijo = false;
-			}
-		}
-	}
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			if (matrizAuxiliar[i][j] != matrizAreaQueijo[i][j]){
-				compararAuxiliarComQueijo = false;
-			}
-		}
-	}
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase; j++){
-			if (matrizArea[i][j] != matrizAuxiliar[i][j]){
-				compararAreaComAuxiliar = false;
-			}
-		}
-	}
-	//	DADOS==tirardepois
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase; j++) {
-			if (matrizAreaQueijo[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizAreaQueijo[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase; j++) {
-			if (matrizAuxiliar[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizAuxiliar[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << endl;
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase; j++) {
-			if (matrizArea[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizArea[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << "\ncomparacao dos mapas:\t" << compararAreaComQueijo << "\t" << compararAuxiliarComQueijo << "\t" << compararAreaComAuxiliar << endl;
-	//tirar----------------------
-
-	if (!(compararAreaComQueijo == true && compararAuxiliarComQueijo == true && compararAreaComAuxiliar == true)){
-		if (compararAreaComQueijo == false){
-			for (int i = 0; i < tamanhoMatrizFase; i++){
-				for (int j = 0; j < tamanhoMatrizFase; j++){
-					matrizAreaQueijo[i][j] = matrizAuxiliar[i][j];
-				}
-			}
-		}
-		else if (compararAuxiliarComQueijo == false){
-			for (int i = 0; i < tamanhoMatrizFase; i++){
-				for (int j = 0; j < tamanhoMatrizFase; j++){
-					matrizAreaQueijo[i][j] = matrizArea[i][j];
-				}
-			}
+			matriz[i][j] = matrizArea[i][j];
 		}
 	}
 }
@@ -591,8 +198,36 @@ bool validacaoDaFase(int vetorDosObjetos[]) {
 	}
  //-----------------------------------*/
 
-	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], matrizArea, matrizAreaRato, matrizAreaQueijo, matrizObjetos);
 	
+	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], matrizObjetos, matrizArea, matrizAreaRato);
+	gerarAreasAcessiveisRatoEQueijo(valorPosicaoQueijo[0], valorPosicaoQueijo[1], matrizObjetos, matrizArea, matrizAreaQueijo);
+	
+	//	DADOS==tirardepois
+	cout << "mapa rato:\n";
+	for (int i = 0; i < tamanhoMatrizFase; i++) {
+		for (int j = 0; j < tamanhoMatrizFase; j++) {
+			if (matrizAreaRato[i][j] == 1){
+				cout << (char) 219;
+			} else {
+				cout << matrizAreaRato[i][j];
+			}
+		}
+		cout << endl;
+	}
+	cout << "mapa queijo:\n";
+	
+	for (int i = 0; i < tamanhoMatrizFase; i++) {
+		for (int j = 0; j < tamanhoMatrizFase; j++) {
+			if (matrizAreaQueijo[i][j] == 1){
+				cout << (char) 219;
+			} else {
+				cout << matrizAreaQueijo[i][j];
+			}
+		}
+		cout << endl;
+	}
+	//tirar----------------------
+
 	for (int i = 0; i < tamanhoMatrizFase; i++){
 		for (int j = 0; j < tamanhoMatrizFase; j++){
 			if (matrizAreaRato[i][j] != matrizAreaQueijo[i][j]){

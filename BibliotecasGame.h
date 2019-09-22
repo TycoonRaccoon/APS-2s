@@ -1,5 +1,5 @@
-#ifndef FUNCOESGAME_H
-#define FUNCOESGAME_H
+#ifndef BIBLIOTECASGAME_H
+#define BIBLIOTECASGAME_H
 
 #include"ConstrucaoFase.h"
 #include"ValidacaoFase.h"
