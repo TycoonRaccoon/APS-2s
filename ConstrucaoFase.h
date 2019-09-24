@@ -9,14 +9,14 @@
 
 using namespace std;
 
-const int tamanhoMatrizFase = 7, tamanhoVetorObjetos = (tamanhoMatrizFase - 2) * (tamanhoMatrizFase - 2);
+const int tamanhoMatrizFase = 72, tamanhoVetorObjetos = (tamanhoMatrizFase - 2) * (tamanhoMatrizFase - 2);
 
 
 
 
-void ZerarMatrizFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase]){
-	for (int i = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < 2 * tamanhoMatrizFase; j++){
+void ZerarMatrizFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase){
+	for (int i = 0; i < tamanhoFase; i++){
+		for (int j = 0; j < 2 * tamanhoFase; j++){
 			matrizFase[i][j] = 'a';
 		}
 	}
@@ -28,30 +28,29 @@ bool teste(int valor, int array[], int max){
 		return false;
 }
 
-void geraNumeroAleatorio(int array[]){
-	int i, x ;
-	i = x = 0;
+void geraNumeroAleatorio(int array[], int tamanhoObjetos){
+	int i = 0, x = 0;
 
-	memset(array, 0, sizeof(int) * tamanhoVetorObjetos);
+	memset(array, 0, sizeof(int) * tamanhoObjetos);
 	srand(time(NULL));
 	while(true){
-		if (i == tamanhoVetorObjetos) break;
-		x = (1 + (rand() % tamanhoVetorObjetos));
+		if (i == tamanhoObjetos) break;
+		x = (1 + (rand() % tamanhoObjetos));
 		if(!teste(x, array, i)) array[i++] = x;
 	}
 }
 
-void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase],int vetorDosObjetos[]) {
+void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int vetorDosObjetos[], int tamanhoFase, int tamanhoObjetos, int quantParedes) {
 
-	geraNumeroAleatorio(vetorDosObjetos);
-	ZerarMatrizFase(matrizFase);
+	geraNumeroAleatorio(vetorDosObjetos, tamanhoObjetos);
+	ZerarMatrizFase(matrizFase, tamanhoFase);
 
-	for (int i = 0, k = 0; i < tamanhoMatrizFase; i++){
-		for (int j = 0; j < tamanhoMatrizFase * 2; j++){
-			if (i == 0 || i == tamanhoMatrizFase - 1){
+	for (int i = 0, k = 0; i < tamanhoFase; i++){
+		for (int j = 0; j < tamanhoFase * 2; j++){
+			if (i == 0 || i == tamanhoFase - 1){
 				matrizFase[i][j] = (char)219;
 			}
-			else if (j == 0 || j == 1 || j == tamanhoMatrizFase * 2 - 1 || j == tamanhoMatrizFase * 2 - 2){
+			else if (j == 0 || j == 1 || j == tamanhoFase * 2 - 1 || j == tamanhoFase * 2 - 2){
 				matrizFase[i][j] = (char)219;
 			} else {
 				if (matrizFase[i][j] == (char)219 || matrizFase[i][j] == (char)32){
@@ -59,57 +58,27 @@ void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase],int v
 				else if (matrizFase[i][j - 1] == (char)81 || matrizFase[i][j - 1] == (char)82){
 					matrizFase[i][j] = (char)32;
 				} else {
-					switch (vetorDosObjetos[k]){
-					case 1:
-						matrizFase[i][j] = (char)81;
-						k++;
-						break;
-					
-					case 2:
-						matrizFase[i][j] = (char)82;
-						k++;
-						break;
-					
-					case 20:
+					if (vetorDosObjetos[k] > quantParedes){
 						matrizFase[i][j] = (char)219;
 						matrizFase[i][j + 1] = (char)219;
 						k++;
-						break;
-					
-					case 21:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 22:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 23:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 24:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					case 25:
-						matrizFase[i][j] = (char)219;
-						matrizFase[i][j + 1] = (char)219;
-						k++;
-						break;
-					
-					default:
-						matrizFase[i][j] = (char)32;
-						matrizFase[i][j + 1] = (char)32;
-						k++;
+					} else{	
+						switch (vetorDosObjetos[k]){
+						case 1:
+							matrizFase[i][j] = (char)81;
+							k++;
+							break;
+						
+						case 2:
+							matrizFase[i][j] = (char)82;
+							k++;
+							break;
+
+						default:
+							matrizFase[i][j] = (char)32;
+							matrizFase[i][j + 1] = (char)32;
+							k++;
+						}
 					}
 				}
 			}
@@ -117,9 +86,9 @@ void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase],int v
 	}
 }
 
-void exibeFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase]) {
-	for (int i = 0; i < tamanhoMatrizFase; i++) {
-		for (int j = 0; j < tamanhoMatrizFase * 2; j++) {
+void exibeFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase) {
+	for (int i = 0; i < tamanhoFase; i++) {
+		for (int j = 0; j < tamanhoFase * 2; j++) {
 			cout << matrizFase[i][j];
 		}
 		cout << endl;
