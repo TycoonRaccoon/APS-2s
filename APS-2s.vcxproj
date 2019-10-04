@@ -76,9 +76,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/F 10000000 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <StackReserveSize>10000000</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="BibliotecasGame.h" />
     <ClInclude Include="ConstrucaoFase.h" />
+    <ClInclude Include="MovimentacaoRato.h" />
     <ClInclude Include="ValidacaoFase.h" />
   </ItemGroup>
   <ItemGroup>
