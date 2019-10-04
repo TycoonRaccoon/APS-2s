@@ -3,6 +3,7 @@
 
 #include"ConstrucaoFase.h"
 #include"ValidacaoFase.h"
+#include"MovimentacaoRato.h"
 
 
 #endif
