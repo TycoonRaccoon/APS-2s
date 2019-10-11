@@ -22,17 +22,17 @@ void main() {
 	int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase];
 	int vetorObjetos[tamanhoVetorObjetos];
 	int valorPosicaoRato[2], valorPosicaoQueijo[2];
-	int tamanhoFase = 7;
-	int tamanhoObjetos = (tamanhoFase - 2) * (tamanhoFase - 2);
-	int inicioParedes = tamanhoObjetos - tamanhoObjetos * 9 /25;
+	int tamanhoFase;
+	int tamanhoObjetos;
+	int inicioParedes;
 
 	while (x != 3){
 		do{	
-			cout << "digite o tamanho desejado da fase!(Ex: 5 para criar uma fase 5x5, tendo como limite valores entre 2 e 60)\n-";
+			cout << "digite o tamanho desejado da fase!(Ex: 5 para criar uma fase 5x5, tendo como limite valores entre 2 e 50)\n-";
 			cin >> tamanhoFase;
 			tamanhoFase += 2, tamanhoObjetos = (tamanhoFase - 2) * (tamanhoFase - 2), inicioParedes = tamanhoObjetos - tamanhoObjetos * 9 /25, x = 0;
 			system("cls");
-		}while (!(tamanhoFase >= 4 && tamanhoFase <= 62));
+		}while (!(tamanhoFase >= 4 && tamanhoFase <= 52));
 		while (x != 2 && x != 3) {
 			criacaoFase(matrizFase, vetorObjetos, tamanhoFase, tamanhoObjetos, inicioParedes);
 			exibeFase(matrizFase, tamanhoFase);
@@ -41,8 +41,9 @@ void main() {
 				cout << "Hoje nao tem queijo!!\n";
 			} else {
 				cout << "Fase validada!!\n";
-				movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], inicioParedes);
-				//movimentoInteligenteRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato, valorPosicaoQueijo, inicioParedes);
+				//movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], inicioParedes);
+				movimentoInteligenteRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato, valorPosicaoQueijo, inicioParedes);
+				//exibeFase(matrizFase, tamanhoFase);
 			}
 
 			cout << "Digite:\n1 para gerar outra fase do mesmo tamanho.\n2 para escolher outro tamanho da fase.\n3 para sair do programa:";
