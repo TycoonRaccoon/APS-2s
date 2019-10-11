@@ -144,6 +144,7 @@ void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int 
 
 void exibeFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int i = 0, int j = 0) {
 	cout << matrizFase[i][j];
+
 	if (j < tamanhoFase * 2 - 1){
 		exibeFase(matrizFase, tamanhoFase, i, j + 1);
 	}

@@ -76,14 +76,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/F 10000000 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <StackReserveSize>50000000</StackReserveSize>
-      <HeapReserveSize>
-      </HeapReserveSize>
-      <HeapCommitSize>
-      </HeapCommitSize>
       <StackCommitSize>50000000</StackCommitSize>
     </Link>
   </ItemDefinitionGroup>
