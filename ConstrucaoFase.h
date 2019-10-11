@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const int tamanhoMatrizFase = 62, tamanhoVetorObjetos = (tamanhoMatrizFase - 2) * (tamanhoMatrizFase - 2);
+const int tamanhoMatrizFase = 52, tamanhoVetorObjetos = (tamanhoMatrizFase - 2) * (tamanhoMatrizFase - 2);
 
 
 void clearScreen(HANDLE hConsole){
@@ -96,7 +96,7 @@ void geraNumeroAleatorio(int array[], int tamanhoArray){
 	}
 }
 
-void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int vetorDosObjetos[], int tamanhoFase, int tamanhoObjetos, int quantParedes) {
+void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int vetorDosObjetos[], int tamanhoFase, int tamanhoObjetos, int inicioParedes) {
 
 	geraNumeroAleatorio(vetorDosObjetos, tamanhoObjetos);
 	ZerarMatrizFase(matrizFase, tamanhoFase);
@@ -114,7 +114,7 @@ void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int 
 				else if (matrizFase[i][j - 1] == (char)81 || matrizFase[i][j - 1] == (char)82){
 					matrizFase[i][j] = (char)32;
 				} else {
-					if (vetorDosObjetos[k] > quantParedes){
+					if (vetorDosObjetos[k] > inicioParedes){
 						matrizFase[i][j] = (char)219;
 						matrizFase[i][j + 1] = (char)219;
 						k++;
@@ -143,8 +143,7 @@ void criacaoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int 
 }
 
 void exibeFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int i = 0, int j = 0) {
-	
-		cout << matrizFase[i][j];
+	cout << matrizFase[i][j];
 	if (j < tamanhoFase * 2 - 1){
 		exibeFase(matrizFase, tamanhoFase, i, j + 1);
 	}

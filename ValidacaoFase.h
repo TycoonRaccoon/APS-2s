@@ -124,10 +124,10 @@ void marcaERetornaPosicoes(int linha, int coluna, int matrizObjetos[tamanhoMatri
 	
 }
 
-void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int quantParedes){
-	zerarMatrizDeArea(matrizArea, tamanhoFase);
+void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, int matriz[tamanhoMatrizFase][tamanhoMatrizFase],int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int quantParedes){
+	zerarMatrizDeArea(matriz, tamanhoFase);
 
-	matrizArea[posicaoInicialLinha][posicaoInicialColuna] = 1;
+	matriz[posicaoInicialLinha][posicaoInicialColuna] = 1;
 	int index = 0,
 	posicoesMarcadas[2 * tamanhoVetorObjetos];
 
@@ -135,10 +135,10 @@ void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, int matr
 		posicoesMarcadas[i] = -1;
 	}
 	
-	marcaERetornaPosicoes(posicaoInicialLinha, posicaoInicialColuna, matrizObjetos, matrizArea, posicoesMarcadas, index, tamanhoObjetos, quantParedes);
+	marcaERetornaPosicoes(posicaoInicialLinha, posicaoInicialColuna, matrizObjetos, matriz, posicoesMarcadas, index, tamanhoObjetos, quantParedes);
 	int i = 0;
 	while (posicoesMarcadas[i] != -1){
-		marcaERetornaPosicoes(posicoesMarcadas[i], posicoesMarcadas[i + 1], matrizObjetos, matrizArea, posicoesMarcadas, index, tamanhoObjetos, quantParedes);
+		marcaERetornaPosicoes(posicoesMarcadas[i], posicoesMarcadas[i + 1], matrizObjetos, matriz, posicoesMarcadas, index, tamanhoObjetos, quantParedes);
 		i += 2;
 	}
 	
@@ -152,21 +152,16 @@ void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, int matr
 	cout << endl;//*/
 }
 
-void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicial, int posicaoColunaInicial, int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], int matriz[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int quantParedes){
+void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicial, int posicaoColunaInicial, int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int matriz[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int quantParedes){
 
 	zerarMatrizDeArea(matriz, tamanhoFase);
 	
-	AreasAcessiveis(posicaoLinhaInicial,posicaoColunaInicial, matrizArea, matrizObjetos, tamanhoFase, tamanhoObjetos, quantParedes);
+	AreasAcessiveis(posicaoLinhaInicial,posicaoColunaInicial, matriz, matrizObjetos, tamanhoFase, tamanhoObjetos, quantParedes);
 	
-	for (int i = 0; i < tamanhoFase; i++){
-		for (int j = 0; j < tamanhoFase; j++){
-			matriz[i][j] = matrizArea[i][j];
-		}
-	}
 }
 
 bool validacaoDaFase(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int inicioParedes, int valorPosicaoRato[], int valorPosicaoQueijo[]) {
-	int matrizArea[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase];
+	int matrizAreaRato[tamanhoMatrizFase][tamanhoMatrizFase], matrizAreaQueijo[tamanhoMatrizFase][tamanhoMatrizFase];
 
 	for (int i = 0; i < tamanhoFase; i++){
 		for (int j = 0; j < tamanhoFase; j++){
@@ -193,8 +188,8 @@ bool validacaoDaFase(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], in
  //-----------------------------------*/
 
 	
-	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], matrizObjetos, matrizArea, matrizAreaRato, tamanhoFase, tamanhoObjetos, inicioParedes);
-	gerarAreasAcessiveisRatoEQueijo(valorPosicaoQueijo[0], valorPosicaoQueijo[1], matrizObjetos, matrizArea, matrizAreaQueijo, tamanhoFase, tamanhoObjetos, inicioParedes);
+	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], matrizObjetos, matrizAreaRato, tamanhoFase, tamanhoObjetos, inicioParedes);
+	gerarAreasAcessiveisRatoEQueijo(valorPosicaoQueijo[0], valorPosicaoQueijo[1], matrizObjetos, matrizAreaQueijo, tamanhoFase, tamanhoObjetos, inicioParedes);
 	/*
 	//	DADOS==tirardepois
 	cout << "mapa rato:\n";
