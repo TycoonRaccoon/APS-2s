@@ -4,15 +4,17 @@
 #include"ConstrucaoFase.h"
 #include"ValidacaoFase.h"
 
-void conversaoMatrizObjetosEmMatrizFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase ,int paredes, bool queijo, int i = 0, int j = 0, int k = 1){
+void conversaoMatrizObjetosEmMatrizFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase ,int paredes, int saida[], bool queijo, int i = 0, int j = 0, int k = 1){
 
-    if (i == 0 || i == tamanhoFase - 1){
-        matrizFase[i][j] = (char)219;
-    }
-    else if (j == 0 || j == 1 || j == tamanhoFase * 2 - 1 || j == tamanhoFase * 2 - 2){
+    if (i == 0 || i == tamanhoFase - 1 || j == 0 || j == 1 || j == tamanhoFase * 2 - 1 || j == tamanhoFase * 2 - 2){
         matrizFase[i][j] = (char)219;
     } else {
-        if (matrizFase[i][j] == (char)219 || matrizFase[i][j] == (char)32 || matrizFase[i][j] == (char)176 || matrizFase[i][j] == (char)81){
+        if (matrizFase[i][j] == (char)219 || matrizFase[i][j] == (char)32 || matrizFase[i][j] == (char)176 || matrizFase[i][j] == (char)81 || matrizFase[i][j] == (char)65){
+        }
+        else if (i == saida[0] && k == saida[1]){
+            matrizFase[i][j] = (char)83;
+            matrizFase[i][j + 1]= (char)65;
+            k++;
         } else {
             if (matrizObjetos[i][k] > paredes){
                 matrizFase[i][j] = (char)219;
@@ -52,29 +54,30 @@ void conversaoMatrizObjetosEmMatrizFase(char matrizFase[tamanhoMatrizFase][2 * t
     }
 
     if (j < tamanhoFase * 2 - 1){
-        conversaoMatrizObjetosEmMatrizFase(matrizFase, matrizObjetos, tamanhoFase, paredes, queijo, i, j + 1, k);
+        conversaoMatrizObjetosEmMatrizFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida, queijo, i, j + 1, k);
     }
 	
 	else if (i < tamanhoFase - 1){
-        conversaoMatrizObjetosEmMatrizFase(matrizFase, matrizObjetos, tamanhoFase, paredes, queijo, i + 1, 0, 1);
+        conversaoMatrizObjetosEmMatrizFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida, queijo, i + 1, 0, 1);
 	} else {
         cout << "\n";
         return;
     }
 }
 
-void printMomentaneoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase ,int paredes, int linhaAtualRato, int colunaAtualRato, bool queijo){
+void printMomentaneoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase ,int paredes, int linhaAtualRato, int colunaAtualRato, int saida[], bool queijo){
     cls();
     matrizObjetos[linhaAtualRato][colunaAtualRato] = 2;
     ZerarMatrizFase(matrizFase, tamanhoFase);
-    conversaoMatrizObjetosEmMatrizFase(matrizFase, matrizObjetos, tamanhoFase, paredes, queijo);
+    conversaoMatrizObjetosEmMatrizFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida, queijo);
     exibeFase(matrizFase, tamanhoFase);
     matrizObjetos[linhaAtualRato][colunaAtualRato] = -1;
     Sleep(10);
 }
 
 //      RANDOM      //
-void movimentoAleatorioRato (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int posicaoLinhaRato, int posicaoColunaRato, int posicaoLinhaQueijo, int posicaoColunaQueijo, int paredes, bool ultDireita = false, bool ultCima = false, bool ultEsquerda = false, bool ultBaixo = false){
+
+void movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int posicaoLinhaRato, int posicaoColunaRato, int posicaoLinhaQueijo, int posicaoColunaQueijo, int paredes, int saida[], bool ultDireita = false, bool ultCima = false, bool ultEsquerda = false, bool ultBaixo = false){
     int DoisNumerosAleatorios[2], TresNumerosAleatorios[3], QuatroNumerosAleatorios[4];
     bool paredeDireita = (matrizObjetos[posicaoLinhaRato][posicaoColunaRato + 1] > paredes && matrizObjetos[posicaoLinhaRato][posicaoColunaRato + 1] <= tamanhoObjetos),
 	paredeCima = (matrizObjetos[posicaoLinhaRato - 1][posicaoColunaRato] > paredes && matrizObjetos[posicaoLinhaRato - 1][posicaoColunaRato] <= tamanhoObjetos),
@@ -83,7 +86,7 @@ void movimentoAleatorioRato (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizF
     
 
     if (matrizObjetos[posicaoLinhaRato][posicaoColunaRato] == matrizObjetos[posicaoLinhaQueijo][posicaoColunaQueijo]){
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         return;
     }
 
@@ -92,162 +95,162 @@ void movimentoAleatorioRato (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizF
             if (!paredeEsquerda && !ultDireita){
                 if (!paredeBaixo && !ultCima){
                     geraNumeroAleatorio(QuatroNumerosAleatorios, 4);
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                     switch (QuatroNumerosAleatorios[3])
                     {
                     case 3:
                         ultCima = false, ultEsquerda = false, ultBaixo = false;
                         ultDireita = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     case 2:
                         ultDireita = false, ultEsquerda = false, ultBaixo = false;
                         ultCima = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     case 1:
                         ultDireita = false, ultCima = false, ultBaixo = false;
                         ultEsquerda = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     case 4:
                         ultDireita = false, ultCima = false, ultEsquerda = false;
                         ultBaixo = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     }
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
                 } else {
                     geraNumeroAleatorio(TresNumerosAleatorios, 3);
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                     switch (TresNumerosAleatorios[2])
                     {
                     case 2:
                         ultCima = false, ultEsquerda = false, ultBaixo = false;
                         ultDireita = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     case 3:
                         ultDireita = false, ultEsquerda = false, ultBaixo = false;
                         ultCima = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     case 1:
                         ultDireita = false, ultCima = false, ultBaixo = false;
                         ultEsquerda = true;
-                        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                         break;
                     }
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
                 }
             }
 
             else if (!paredeBaixo && !ultCima){
                 geraNumeroAleatorio(TresNumerosAleatorios, 3);
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                 switch (TresNumerosAleatorios[0])
                 {
                 case 1:
                     ultCima = false, ultEsquerda = false, ultBaixo = false;
                     ultDireita = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 2:
                     ultDireita = false, ultEsquerda = false, ultBaixo = false;
                     ultCima = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 3:
                     ultDireita = false, ultCima = false, ultEsquerda = false;
                     ultBaixo = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 }
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
             } else {
                 geraNumeroAleatorio(DoisNumerosAleatorios, 2);
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                 switch (DoisNumerosAleatorios[1])
                 {
                 case 2:
                     ultCima = false, ultEsquerda = false, ultBaixo = false;
                     ultDireita = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 1:
                     ultDireita = false, ultEsquerda = false, ultBaixo = false;
                     ultCima = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 }
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
             }
         }
         else if (!paredeEsquerda && !ultDireita){
             if (!paredeBaixo && !ultCima){
                 geraNumeroAleatorio(TresNumerosAleatorios, 3);
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                 switch (TresNumerosAleatorios[1])
                 {
                 case 3:
                     ultCima = false, ultEsquerda = false, ultBaixo = false;
                     ultDireita = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 2:
                     ultDireita = false, ultCima = false, ultBaixo = false;
                     ultEsquerda = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 1:
                     ultDireita = false, ultCima = false, ultEsquerda = false;
                     ultBaixo = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 }
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
             } else {
                 geraNumeroAleatorio(DoisNumerosAleatorios, 2);
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                 switch (DoisNumerosAleatorios[0])
                 {
                 case 1:
                     ultCima = false, ultEsquerda = false, ultBaixo = false;
                     ultDireita = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 2:
                     ultDireita = false, ultCima = false, ultBaixo = false;
                     ultEsquerda = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 }
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
             }
         }
         else if (!paredeBaixo && !ultCima){
             geraNumeroAleatorio(DoisNumerosAleatorios, 2);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             switch (DoisNumerosAleatorios[0])
             {
             case 2:
                 ultCima = false, ultEsquerda = false, ultBaixo = false;
                 ultDireita = true;
-                movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                 break;
             case 1:
                 ultDireita = false, ultCima = false, ultEsquerda = false;
                 ultBaixo = true;
-                movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                 break;
             }
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         } else {
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultCima = false, ultEsquerda = false, ultBaixo = false;
             ultDireita = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);  
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);  
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
 
     }
@@ -255,135 +258,141 @@ void movimentoAleatorioRato (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizF
         if (!paredeEsquerda && !ultDireita){
             if (!paredeBaixo && !ultCima){
                 geraNumeroAleatorio(TresNumerosAleatorios, 3);
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                 switch (TresNumerosAleatorios[2])
                 {
                 case 2:
                     ultDireita = false, ultEsquerda = false, ultBaixo = false;
                     ultCima = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 3:
                     ultDireita = false, ultCima = false, ultBaixo = false;
                     ultEsquerda = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 1:
                     ultDireita = false, ultCima = false, ultEsquerda = false;
                     ultBaixo = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 }
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
             } else {
                 geraNumeroAleatorio(DoisNumerosAleatorios, 2);
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
                 switch (DoisNumerosAleatorios[0])
                 {
                 case 2:
                     ultDireita = false, ultEsquerda = false, ultBaixo = false;
                     ultCima = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 case 1:
                     ultDireita = false, ultCima = false, ultBaixo = false;
                     ultEsquerda = true;
-                    movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                     break;
                 }
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
             }
         }
         else if (!paredeBaixo && !ultCima){
             geraNumeroAleatorio(DoisNumerosAleatorios, 2);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             switch (DoisNumerosAleatorios[1])
             {
             case 2:
                 ultDireita = false, ultEsquerda = false, ultBaixo = false;
                 ultCima = true;
-                movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                 break;
             case 1:
                 ultDireita = false, ultCima = false, ultEsquerda = false;
                 ultBaixo = true;
-                movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                 break;
             }
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         } else {
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultDireita = false, ultEsquerda = false, ultBaixo = false;
             ultCima = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
 
     }
     else if (!paredeEsquerda && !ultDireita){
         if (!paredeBaixo && !ultCima){
             geraNumeroAleatorio(DoisNumerosAleatorios, 2);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             switch (DoisNumerosAleatorios[1])
             {
             case 2:
                 ultDireita = false, ultCima = false, ultBaixo = false;
                 ultEsquerda = true;
-                movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                 break;
             case 1:
                 ultDireita = false, ultCima = false, ultEsquerda = false;
                 ultBaixo = true;
-                movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
+                movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
                 break;
             }
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         } else {
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultDireita = false, ultCima = false, ultBaixo = false;
             ultEsquerda = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
 
     }
     else if (!paredeBaixo && !ultCima){
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
         ultDireita = false, ultCima = false, ultEsquerda = false;
         ultBaixo = true;
-        movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+        movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
     } else {
         if (ultDireita){
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultDireita = false, ultCima = false, ultBaixo = false;
             ultEsquerda = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
         else if (ultCima){
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultDireita = false, ultCima = false, ultEsquerda = false;
             ultBaixo = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
         else if (ultEsquerda){
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultCima = false, ultEsquerda = false, ultBaixo = false;
             ultDireita = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);  
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);  
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
         else if (ultBaixo){
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, false);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, false);
             ultDireita = false, ultEsquerda = false, ultBaixo = false;
             ultCima = true;
-            movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, ultDireita, ultCima, ultEsquerda, ultBaixo);
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, true);
+            movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
     }
 
+}
+
+void movimentoAleatorioRato(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int valorPosicaoRato[], int valorPosicaoQueijo[], int paredes){
+    int saida[2] = {valorPosicaoRato[0], valorPosicaoRato[1]};
+
+    movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], paredes, saida);
 }
 //-----------------//
 
@@ -464,49 +473,50 @@ void encontrarMenorCaminho(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFas
 
 //      SMART      //
 
-void movimento(int matrizCaminho[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int valorPosicaoQueijo[], int linhaInicial, int colunaInicial, int inicioParedes, int tamanhoFase, bool ultDireita = false, bool ultCima = false, bool ultEsquerda = false, bool ultBaixo = false){
+void movimentoSmart(int matrizCaminho[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int valorPosicaoQueijo[], int linhaInicial, int colunaInicial, int inicioParedes, int tamanhoFase, int saida[], bool ultDireita = false, bool ultCima = false, bool ultEsquerda = false, bool ultBaixo = false){
 
     if (linhaInicial == valorPosicaoQueijo[0] && colunaInicial == valorPosicaoQueijo[1]){
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,true);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, true);
         return;
     }
 
     if (matrizCaminho[linhaInicial][colunaInicial + 1] == 1 && !ultEsquerda){
         ultCima = false, ultEsquerda = false, ultBaixo = false;
         ultDireita = true;
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,false);
-        movimento(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial, colunaInicial + 1, inicioParedes, tamanhoFase, ultDireita, ultCima, ultEsquerda, ultBaixo);
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,true);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, false);
+        movimentoSmart(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial, colunaInicial + 1, inicioParedes, tamanhoFase, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, true);
     }
     else if (matrizCaminho[linhaInicial - 1][colunaInicial] == 1 && !ultBaixo){
         ultDireita = false, ultEsquerda = false, ultBaixo = false;
         ultCima = true;
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,false);
-        movimento(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial - 1, colunaInicial, inicioParedes, tamanhoFase, ultDireita, ultCima, ultEsquerda, ultBaixo);
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,true);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, false);
+        movimentoSmart(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial - 1, colunaInicial, inicioParedes, tamanhoFase, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, true);
     }
     else if (matrizCaminho[linhaInicial][colunaInicial - 1] == 1 && !ultDireita){
         ultDireita = false, ultCima = false, ultBaixo = false;
         ultEsquerda = true;
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,false);
-        movimento(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial, colunaInicial - 1, inicioParedes, tamanhoFase, ultDireita, ultCima, ultEsquerda, ultBaixo);
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,true);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, false);
+        movimentoSmart(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial, colunaInicial - 1, inicioParedes, tamanhoFase, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, true);
     }
     else if (matrizCaminho[linhaInicial + 1][colunaInicial] == 1 && !ultCima){
         ultDireita = false, ultCima = false, ultEsquerda = false;
         ultBaixo = true;
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,false);
-        movimento(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial + 1, colunaInicial, inicioParedes, tamanhoFase, ultDireita, ultCima, ultEsquerda, ultBaixo);
-        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial,true);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, false);
+        movimentoSmart(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, linhaInicial + 1, colunaInicial, inicioParedes, tamanhoFase, saida, ultDireita, ultCima, ultEsquerda, ultBaixo);
+        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, inicioParedes, linhaInicial, colunaInicial, saida, true);
     }
 }
 
 void movimentoInteligenteRato(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int valorPosicaoRato[], int valorPosicaoQueijo[], int paredes){
     int matrizCaminho[tamanhoMatrizFase][tamanhoMatrizFase];
+    int saida[2] = {valorPosicaoRato[0], valorPosicaoRato[1]};
     zerarMatrizDeArea(matrizCaminho, tamanhoFase);
     encontrarMenorCaminho(matrizObjetos, matrizCaminho, tamanhoFase, tamanhoObjetos, paredes, valorPosicaoRato, valorPosicaoQueijo);
 
-    movimento(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, valorPosicaoRato[0], valorPosicaoRato[1], paredes, tamanhoFase);
+    movimentoSmart(matrizCaminho, matrizFase, matrizObjetos, valorPosicaoQueijo, valorPosicaoRato[0], valorPosicaoRato[1], paredes, tamanhoFase, saida);
 }
 
 #endif

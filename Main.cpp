@@ -41,7 +41,7 @@ void main() {
 				cout << "Hoje nao tem queijo!!\n";
 			} else {
 				cout << "Fase validada!!\n";
-				//movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato[0], valorPosicaoRato[1], valorPosicaoQueijo[0], valorPosicaoQueijo[1], inicioParedes);
+				//movimentoAleatorioRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato, valorPosicaoQueijo, inicioParedes);
 				movimentoInteligenteRato(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, valorPosicaoRato, valorPosicaoQueijo, inicioParedes);
 				//exibeFase(matrizFase, tamanhoFase);
 			}
