@@ -4,6 +4,7 @@
 #include"ConstrucaoFase.h"
 #include"ValidacaoFase.h"
 #include"MovimentacaoRato.h"
+#include<time.h>
 
 
 #endif
