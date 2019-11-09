@@ -39,7 +39,11 @@ void conversaoMatrizObjetosEmMatrizFase(char matrizFase[tamanhoMatrizFase][2 * t
                     if (queijo){
                         matrizFase[i][j + 1] = (char)81;
                     } else {
-                        matrizFase[i][j + 1] = (char)32;
+						if ((matrizObjetos[i + 1][k] == -1 || matrizObjetos[i + 1][k] > paredes) && (matrizObjetos[i - 1][k] == -1 || matrizObjetos[i - 1][k] > paredes) && (matrizObjetos[i][k + 1] == -1 || matrizObjetos[i][k + 1] > paredes) && (matrizObjetos[i][k - 1] == -1 || matrizObjetos[i][k - 1] > paredes)){
+							matrizFase[i][j + 1] = (char)176;
+						} else {
+							matrizFase[i][j + 1] = (char)32;
+						}
                     }
                     k++;
                     break;

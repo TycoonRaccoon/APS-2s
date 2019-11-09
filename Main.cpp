@@ -31,11 +31,11 @@ void main() {
 		}
 		
 		do {	
-			cout << "digite o tamanho desejado da fase!(Ex: 5 para criar uma fase 5x5, tendo como limite valores entre 2 e 45)\n-";
+			cout << "digite o tamanho desejado da fase!(Ex: 5 para criar uma fase 5x5, tendo como limite valores entre 2 e 40)\n-";
 			cin >> tamanhoFase;
 			tamanhoFase += 2, tamanhoObjetos = (tamanhoFase - 2) * (tamanhoFase - 2), inicioParedes = tamanhoObjetos - tamanhoObjetos * 9 /25;
 			system("cls");
-		} while (!(tamanhoFase >= 4 && tamanhoFase <= 47));
+		} while (!(tamanhoFase >= 4 && tamanhoFase <= 42));
 		
 		do {
 			do{
