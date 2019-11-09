@@ -15,12 +15,6 @@ void zerarMatrizDeArea(int MatrizASerZerada[tamanhoMatrizFase][tamanhoMatrizFase
 	else if (i < tamanhoFase - 1){
 		zerarMatrizDeArea(MatrizASerZerada, tamanhoFase, i + 1, 0);
 	}
-	/*	TIRAR
-	for (int i = 0; i < tamanhoFase; i++){
-		for (int j = 0; j < tamanhoFase; j++){
-			MatrizASerZerada[i][j] = 0;
-		}
-	}*/
 }
 
 
@@ -141,15 +135,6 @@ void AreasAcessiveis(int posicaoInicialLinha, int posicaoInicialColuna, int matr
 		marcaERetornaPosicoes(posicoesMarcadas[i], posicoesMarcadas[i + 1], matrizObjetos, matriz, posicoesMarcadas, index, tamanhoObjetos, quantParedes);
 		i += 2;
 	}
-	
-	/*//print
-	for (int i = 0, j = 0; i < 2 * tamanhoObjetos; i++, j++){
-		cout << posicoesMarcadas[i];
-		if (j % 2 == 1){
-			cout << "\t";
-		}
-	}
-	cout << endl;//*/
 }
 
 void gerarAreasAcessiveisRatoEQueijo(int posicaoLinhaInicial, int posicaoColunaInicial, int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int matriz[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int quantParedes){
@@ -177,45 +162,9 @@ bool validacaoDaFase(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], in
 			}
 		}
 	}
-
- //PRINT MATRIZ OBJETOS!!!TIRAR DEPOIS
-	/*for (int i = 0; i < tamanhoFase; i++) {
-		for (int j = 0; j < tamanhoFase; j++) {
-			cout << matrizObjetos[i][j] << "\t";
-		}
-		cout << endl;
-	}
- //-----------------------------------*/
-
 	
 	gerarAreasAcessiveisRatoEQueijo(valorPosicaoRato[0], valorPosicaoRato[1], matrizObjetos, matrizAreaRato, tamanhoFase, tamanhoObjetos, inicioParedes);
 	gerarAreasAcessiveisRatoEQueijo(valorPosicaoQueijo[0], valorPosicaoQueijo[1], matrizObjetos, matrizAreaQueijo, tamanhoFase, tamanhoObjetos, inicioParedes);
-	/*
-	//	DADOS==tirardepois
-	cout << "mapa rato:\n";
-	for (int i = 0; i < tamanhoFase; i++) {
-		for (int j = 0; j < tamanhoFase; j++) {
-			if (matrizAreaRato[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizAreaRato[i][j];
-			}
-		}
-		cout << endl;
-	}
-	cout << "mapa queijo:\n";
-	
-	for (int i = 0; i < tamanhoFase; i++) {
-		for (int j = 0; j < tamanhoFase; j++) {
-			if (matrizAreaQueijo[i][j] == 1){
-				cout << (char) 219;
-			} else {
-				cout << matrizAreaQueijo[i][j];
-			}
-		}
-		cout << endl;
-	}
-	//tirar----------------------*/
 
 	for (int i = 0; i < tamanhoFase; i++){
 		for (int j = 0; j < tamanhoFase; j++){
