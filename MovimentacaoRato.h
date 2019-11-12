@@ -79,7 +79,7 @@ void printMomentaneoFase(char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFas
     Sleep(7);
 }
 
-//      RANDOM      //
+
 
 bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int posicaoLinhaRato, int posicaoColunaRato, int posicaoLinhaQueijo, int posicaoColunaQueijo, int paredes, int saida[], int DoisNumerosAleatorios[], int TresNumerosAleatorios[], int QuatroNumerosAleatorios[], bool ultDireita = false, bool ultCima = false, bool ultEsquerda = false, bool ultBaixo = false){
     bool paredeDireita = (matrizObjetos[posicaoLinhaRato][posicaoColunaRato + 1] > paredes && matrizObjetos[posicaoLinhaRato][posicaoColunaRato + 1] <= tamanhoObjetos),
@@ -516,15 +516,6 @@ void iniciarGeracaoDoCaminho(int posicaoInicial[], int matrizObjetos[tamanhoMatr
 	
     marcaERetornaPosicoes(posicaoInicial[0], posicaoInicial[1], matrizObjetos, matrizAuxiliar, posicoesMarcadas, index, tamanhoObjetos, inicioParedes);
 	gerarCaminho(posicoesMarcadas, matriz, matrizObjetos, matrizAuxiliar, tamanhoFase, tamanhoObjetos, inicioParedes, index, limiteMutavel);
-
-	/*//PRINT DADOS
-	for (int i = 0, j = 0; i < 2 * tamanhoObjetos - (tamanhoObjetos - inicioParedes + 1); i++, j++){
-		cout << posicoesMarcadas[i];
-		if (j % 2 == 1){
-			cout << "\t";
-		}
-	}
-	cout << endl;//*/
 }
 
 void encontrarMenorCaminho(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int matrizCaminho[tamanhoMatrizFase][tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int inicioParedes, int valorPosicaoRato[], int valorPosicaoQueijo[]) {
@@ -535,22 +526,8 @@ void encontrarMenorCaminho(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFas
     (doisNumerosAletorios[0] == 1)?
 	iniciarGeracaoDoCaminho(valorPosicaoRato, matrizObjetos, matrizCaminho, tamanhoFase, tamanhoObjetos, inicioParedes, valorPosicaoQueijo):
 	iniciarGeracaoDoCaminho(valorPosicaoQueijo, matrizObjetos, matrizCaminho, tamanhoFase, tamanhoObjetos, inicioParedes, valorPosicaoRato);
-    /*// PRINT DADOS
-    for (int i = 0; i < tamanhoFase; i++){
-        for (int j = 0; j < tamanhoFase; j++){
-            if (matrizCaminho[i][j] == 1){
-                cout << (char)219;
-            } else {
-            cout << matrizCaminho[i][j];
-            }
-        }
-    cout << endl;
-    }
-	//*/
 }
 
-
-//      SMART      //
 
 void movimentoSmart(int matrizCaminho[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], int valorPosicaoQueijo[], int linhaInicial, int colunaInicial, int inicioParedes, int tamanhoFase, int saida[], bool ultDireita = false, bool ultCima = false, bool ultEsquerda = false, bool ultBaixo = false){
 
