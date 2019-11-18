@@ -124,7 +124,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                         break;
                     }
                     if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						if (!result) {
+							printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+							return true;
+						}
                         return true;
                     }
                     printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -150,7 +153,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                         break;
                     }
                     if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                        printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						if (!result) {
+							printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+							return true;
+						}
                         return true;
                     }
                     printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -179,7 +185,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                     break;
                 }
                 if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					if (!result) {
+						printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						return true;
+					}
                     return true;
                 }
                 printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -200,7 +209,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                     break;
                 }
                 if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					if (!result) {
+						printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						return true;
+					}
                     return true;
                 }
                 printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -229,7 +241,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                     break;
                 }
                 if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					if (!result) {
+						printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						return true;
+					}
                     return true;
                 }
                 printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -250,7 +265,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                     break;
                 }
                 if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					if (!result) {
+						printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						return true;
+					}
                     return true;
                 }
                 printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -273,7 +291,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                 break;
             }
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -283,7 +304,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultDireita = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);  
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -314,7 +338,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                     break;
                 }
                 if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					if (!result) {
+						printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						return true;
+					}
                     return true;
                 }
                 printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -335,7 +362,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                     break;
                 }
                 if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                    printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					if (!result) {
+						printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+						return true;
+					}
                     return true;
                 }
                 printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -358,7 +388,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                 break;
             }
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -368,7 +401,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultCima = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -393,7 +429,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
                 break;
             }
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -403,7 +442,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultEsquerda = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -416,7 +458,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
         ultBaixo = true;
         result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);
         if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-            printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+			if (!result) {
+				printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				return true;
+			}
             return true;
         }
         printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -427,7 +472,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultEsquerda = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato - 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -438,7 +486,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultBaixo = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato + 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -449,7 +500,10 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultDireita = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato, posicaoColunaRato + 1, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);  
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
@@ -460,12 +514,16 @@ bool movimentoRandom (int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], c
             ultCima = true;
             result = movimentoRandom(matrizObjetos, matrizFase, tamanhoFase, tamanhoObjetos, posicaoLinhaRato - 1, posicaoColunaRato, posicaoLinhaQueijo, posicaoColunaQueijo, paredes, saida, DoisNumerosAleatorios, TresNumerosAleatorios, QuatroNumerosAleatorios, ultDireita, ultCima, ultEsquerda, ultBaixo);
             if ((posicaoLinhaRato == saida[0] && posicaoColunaRato == saida[1]) || result){
-                printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+				if (!result) {
+					printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, saida[0], saida[1], saida, true);
+					return true;
+				}
                 return true;
             }
             printMomentaneoFase(matrizFase, matrizObjetos, tamanhoFase, paredes, posicaoLinhaRato, posicaoColunaRato, saida, true);
         }
     }
+	return false;
 }
 
 void movimentoAleatorioRato(int matrizObjetos[tamanhoMatrizFase][tamanhoMatrizFase], char matrizFase[tamanhoMatrizFase][2 * tamanhoMatrizFase], int tamanhoFase, int tamanhoObjetos, int valorPosicaoRato[], int valorPosicaoQueijo[], int paredes){
